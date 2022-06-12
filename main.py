@@ -1,7 +1,11 @@
 import telebot
 from telebot import types
 
-bot = telebot.TeleBot('')
+def read_file(path):
+    return open('token.txt', 'r')
+
+token = open('token.txt', 'r').readline()
+bot = telebot.TeleBot(token)
 
 
 @bot.message_handler(commands=['start'])
@@ -26,6 +30,7 @@ def get_user_photo(message):
     bot.send_message(message.chat.id, 'Вау, яке круте фото')
 
 
+
 @bot.message_handler(commands=['website'])
 def website(message):
     markup = types.InlineKeyboardMarkup()
@@ -34,12 +39,11 @@ def website(message):
 
 @bot.message_handler(commands=['help'])
 def website(message):
-    markup = types.ReplyKeyboardMarkup()
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     website = types.KeyboardButton('Веб сайт')
-    start = types.KeyboardButton('Старт')
-    markup.add(types.InlineKeyboardButton("Посетить вебсайт", url="https://itproger.com"))
+    start = types.KeyboardButton('Start')
+    markup.add(website, start)
     bot.send_message(message.chat.id, 'Перейдите на сайт', reply_markup=markup)
-
 
 
 
